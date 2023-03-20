@@ -57,7 +57,7 @@ class _MainScreenState extends State<_MainScreen> {
 
   Future<void> initDynamicLinks() async {
     dynamicLinks.onLink.listen((dynamicLinkData) {
-      Navigator.pushNamed(context, dynamicLinkData.link.path);
+      print(dynamicLinkData);
     }).onError((error) {
       print('onLink error');
       print(error.message);
@@ -73,6 +73,11 @@ class _MainScreenState extends State<_MainScreen> {
       uriPrefix: 'https://flutterfiretests.page.link',
       longDynamicLink: Uri.parse(
         'https://flutterfiretests.page.link?efr=0&ibi=io.flutter.plugins.firebase.dynamiclinksexample&apn=io.flutter.plugins.firebase.dynamiclinksexample&imv=0&amv=0&link=https%3A%2F%2Fexample%2Fhelloworld&ofl=https://ofl-example.com',
+      ),
+      googleAnalyticsParameters: const GoogleAnalyticsParameters(
+        campaign: "test_campaing",
+        medium: "test_medium",
+        source: "test_source",
       ),
       link: Uri.parse(DynamicLink),
       androidParameters: const AndroidParameters(
@@ -120,12 +125,7 @@ class _MainScreenState extends State<_MainScreen> {
                         onPressed: () async {
                           final PendingDynamicLinkData? data =
                               await dynamicLinks.getInitialLink();
-                          final Uri? deepLink = data?.link;
-
-                          if (deepLink != null) {
-                            // ignore: unawaited_futures
-                            Navigator.pushNamed(context, deepLink.path);
-                          }
+                          print(data);
                         },
                         child: const Text('getInitialLink'),
                       ),
